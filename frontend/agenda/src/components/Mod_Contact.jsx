@@ -4,24 +4,31 @@ import { useState } from "react";
 import M from "materialize-css";
 
 export function ModContacto({ id }) {
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
-
+  
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [correo, setCorreo] = useState("");
   const [telefono, setTelefono] = useState("");
+  const [favorito, setFavorito] = useState("");
 
+  const idModal = "#contentModal" + id
+  const triggerModal = "contentModal" + id
+
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
+  
   const getContact = () => {
     axios
-      .post("http://localhost:5000/getContact", JSON.stringify({ id: id }))
-      .then((contact) => {
-        if (contact.flag) {
-          setNombre(contact.nombre);
-          setApellido(contact.apellido);
-          setCorreo(contact.correo);
-          setTelefono(contact.telefono);
+      .post("http://localhost:5000/getContact", { 'id': id })
+      .then((data) => {
+        console.log(data.data)
+        if (data.data.flag) {
+          setNombre(data.data.contact.nombre);
+          setApellido(data.data.contact.apellido);
+          setCorreo(data.data.contact.correo);
+          setTelefono(data.data.contact.telefono);
+          setFavorito(data.data.contact.favorito);
         } else {
           M.toast({
             html: "Ocurrio Un Error En El Servidor",
@@ -42,37 +49,48 @@ export function ModContacto({ id }) {
     if (nombre !== "") {
       if (apellido !== "") {
         if (correo !== "") {
-          if (telefono !== "" && telefono.length > 0 && telefono.length < 9) {
-            axios
-              .post(
-                "http://localhost:5000/editContact",
-                JSON.stringify({
-                  id: id,
-                  nombre: nombre,
-                  apellido: apellido,
-                  telefono: telefono,
-                  correo: correo,
+          if (telefono !== "" && telefono.length === 8) {
+            const regex_email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (regex_email.test(correo)){
+              axios
+                .post(
+                  "http://localhost:5000/editContact",
+                  {
+                    'contact': {
+                      'id': id,
+                      'nombre': nombre,
+                      'apellido': apellido,
+                      'telefono': parseInt(telefono),
+                      'correo': correo,
+                      'favorito': favorito
+                    }
+                  }
+                ) 
+                .then((resp) => {
+                  if (resp.data.res) {
+                    M.toast({
+                      html: "El Contacto Ha Sido Actualizado",
+                      classes: "rounded green darken-3 white-text",
+                    });
+                  } else {
+                    M.toast({
+                      html: "Ocurrio Un Error En El Servidor",
+                      classes: "rounded red darken-3 white-text",
+                    });
+                  }
                 })
-              )
-              .then((resp) => {
-                if (resp.flag) {
+                .catch((err) => {
                   M.toast({
-                    html: "El Contacto Ha Sido Actualizado",
-                    classes: "rounded green darken-3 white-text",
-                  });
-                } else {
-                  M.toast({
-                    html: "Ocurrio Un Error En El Servidor",
+                    html: "Ocurrio Un Error Al Realizar La Peticion",
                     classes: "rounded red darken-3 white-text",
                   });
-                }
-              })
-              .catch((err) => {
-                M.toast({
-                  html: "Ocurrio Un Error Al Realizar La Peticion",
-                  classes: "rounded red darken-3 white-text",
                 });
+            } else {
+              M.toast({
+                html: "El correo electrónico no es válido.",
+                classes: "rounded orange darken-3 white-text",
               });
+            }
           } else {
             M.toast({
               html: "El Numero De Telefono Ingresado Es Incorrecto",
@@ -112,7 +130,7 @@ export function ModContacto({ id }) {
   return (
     <>
       <a
-        href="#contentModal"
+        href={idModal}
         className="waves-effect waves-light btn indigo darken-2 modal-trigger"
         onClick={() => getContact()}
       >
@@ -120,33 +138,31 @@ export function ModContacto({ id }) {
         Modificar Contacto
       </a>
 
-      <div className="modal modal-fixed-footer" id="contentModal">
+      <div className="modal modal-fixed-footer" id={triggerModal}>
         <div className="modal-content">
-          <h4>Modificar Contacto</h4>
+          <h4 className="black-text">Modificar Contacto</h4>
           <div className="divider"></div>
           <div className="container" style={{ paddingTop: "8%" }}>
-            <div className="row">
+          <div className="row">
               <div className="input-field col s6">
                 <input
                   type="text"
                   id="nombre"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "nombre")}
-                >
-                  {nombre}
-                </input>
-                <label htmlFor="nombre">Nombre</label>
+                  defaultValue={nombre}
+                />
+                <label htmlFor="nombre" className="active">Nombre</label>
               </div>
               <div className="input-field col s6">
                 <input
-                  type="email"
+                  type="text"
                   id="apellido"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "apellido")}
-                >
-                  {apellido}
-                </input>
-                <label htmlFor="apellido">Apellido</label>
+                  defaultValue={apellido}
+                />
+                <label htmlFor="apellido" className="active">Apellido</label>
               </div>
             </div>
             <div className="row">
@@ -156,21 +172,19 @@ export function ModContacto({ id }) {
                   id="telefono"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "telefono")}
-                >
-                  {telefono}
-                </input>
-                <label htmlFor="telefono">Telefono</label>
+                  defaultValue={telefono}
+                />
+                <label htmlFor="telefono" className="active">Telefono</label>
               </div>
               <div className="input-field col s6">
                 <input
-                  type="text"
+                  type="email"
                   id="correo"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "correo")}
-                >
-                  {correo}
-                </input>
-                <label htmlFor="correo">Correo</label>
+                  defaultValue={correo}
+                />
+                <label htmlFor="correo" className="active">Correo</label>
               </div>
             </div>
           </div>
@@ -181,14 +195,14 @@ export function ModContacto({ id }) {
             className="modal-close waves-effect waves-green btn-flat col s2"
             onClick={() => sendContact()}
           >
-            <i className="material-icons left">save_as</i>
+            <i className="material-icons">save_as</i>
             Guardar
           </a>
           <a
             href="#!"
             className="modal-close waves-effect waves-red btn-flat col s2"
           >
-            <i className="material-icons left">cancel</i>
+            <i className="material-icons">cancel</i>
             Cancelar
           </a>
         </div>

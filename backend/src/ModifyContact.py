@@ -10,7 +10,6 @@ def get_contacto(id):
     # Buscar el contacto por id en la base de datos
     c.execute('''SELECT * FROM contactos WHERE id=?''', (id,))
     contacto = c.fetchone()
-
     # Cerrar la conexión
     conn.close()
 
@@ -21,6 +20,7 @@ def get_contacto(id):
         return None
 
 def edit_contacto(contacto):
+    bandera = False
     try:
         # Conexión a la base de datos
         # conn = sqlite3.connect('D:/New folder/OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala/7 SEMESTRE/4AYD1/LAB DE AYD1/BASE DE DATOS P1 TEMPORAL/agenda_db.db')
@@ -29,15 +29,22 @@ def edit_contacto(contacto):
 
         # Actualizar el contacto en la base de datos
         c.execute('''UPDATE contactos SET nombre=?, apellido=?, telefono=?, correo=?, favorito=? WHERE id=?''',
-                  (contacto['nombre'], contacto['apellido'], contacto['telefono'], contacto['correo'], contacto['favorito'], contacto['id']))
-
+                  (contacto['nombre'], contacto['apellido'], (contacto['telefono']), contacto['correo'], contacto['favorito'], contacto['id']))
+        print((contacto['telefono']))
         # Guardar los cambios y cerrar la conexión
         conn.commit()
         conn.close()
 
-        return True
-    except:
-        return False
+        bandera = True
+    except Exception as e:
+        print("Error:", e)
+    finally:
+        # Siempre cerrar la conexión a la base de datos
+        if conn:
+            conn.close()
+
+        return bandera
+
 
 # ENDPOINT EN APP.PY:
 

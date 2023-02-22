@@ -3,6 +3,7 @@ from src.ModifyContact import edit_contacto, get_contacto
 from src.AddContact import add_contact
 from src.GetContacts import get_contacts
 from src.AddFavs import add_favs
+from src.Listfavs import list_favs
 
 from flask_cors import CORS
 app = Flask(__name__)
@@ -74,6 +75,14 @@ def aniadir_favorito():
         response = jsonify({'flag': False})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return (response)
+
+#! Endpoint para obtener todos los contactos FAVORITOS
+@app.route('/listfavs', methods=['GET'])
+def obtener_favoritos():
+    resprev = list_favs()
+    response = jsonify(resprev)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == '__main__':
     app.run()

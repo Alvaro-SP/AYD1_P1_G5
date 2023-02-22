@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  color: white;
+  background-color: #1b1b32;
+  font-family: Lato, sans-serif;
+  margin-top: 0px;
+}
+h1 {
+  color: #1b1b32;
+  font-size: 25px;
+  font-family: Roboto, sans-serif;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.App {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  min-width: 430px;
+ /* justify-content: center;*/
+  /*align-items: center; */
+}
+

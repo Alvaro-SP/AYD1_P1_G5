@@ -16,25 +16,25 @@ def obtener_contacto():
     contacto = get_contacto(id)
     # Si se encontró el contacto, devolver un objeto JSON con la propiedad "Res" establecida en "true" y el contacto en la propiedad "Contact"
     if contacto:
-        response = jsonify({'flag': True, 'Contact': contacto})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return jsonify(response)
+        response = jsonify({'flag': True, 'contact': contacto})
+        # response.headers.add('Access-Control-Allow-Origin', '*')
+        return (response)
     else:
         response = jsonify({'flag': False})
         response.headers.add('Access-Control-Allow-Origin', '*')
-        return jsonify(response)
+        return (response)
 
 #! Endpoint para editar un contacto
 @app.route('/editContact', methods=['POST'])
 def editar_contacto():
-    contacto = request.json['Contact']
+    contacto = request.json['contact']
     if not edit_contacto(contacto):
-        response = jsonify({'Res': False})
+        response = jsonify({'res': False})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
-    response = jsonify({'Res': True})
+    response = jsonify({'res': True})
     response.headers.add('Access-Control-Allow-Origin', '*')
-    return jsonify(response)
+    return (response)
 
 #! Endpoint para agregar un contacto
 @app.route('/addContact', methods=['POST'])

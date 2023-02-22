@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import M from "materialize-css";
 
-export function AddContact({ id }) {
+export function AddContact() {
   useEffect(() => {
     M.AutoInit();
   }, []);
@@ -18,37 +18,46 @@ export function AddContact({ id }) {
     if (nombre !== "") {
       if (apellido !== "") {
         if (correo !== "") {
-          if (telefono !== "" && telefono.length > 0 && telefono.length < 9) {
-            axios
-              .post(
-                "http://localhost:5000/editContact",
-                JSON.stringify({
-                  id: id,
-                  nombre: nombre,
-                  apellido: apellido,
-                  telefono: telefono,
-                  correo: correo,
+          if (telefono !== "" && telefono.length === 8) {
+            const regex_email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (regex_email.test(correo)){
+              axios
+                .post(
+                  "http://localhost:5000/addContact",
+                  {
+                    'contact': {
+                      'nombre': nombre,
+                      'apellido': apellido,
+                      'telefono': telefono,
+                      'correo': correo,
+                    }
+                  }
+                )
+                .then((resp) => {
+                  if (resp.data.res) {
+                    M.toast({
+                      html: "El Contacto Ha Sido Creado",
+                      classes: "rounded green darken-3 white-text",
+                    });
+                  } else {
+                    M.toast({
+                      html: "Ocurrio Un Error En El Servidor",
+                      classes: "rounded red darken-3 white-text",
+                    });
+                  }
                 })
-              )
-              .then((resp) => {
-                if (resp.flag) {
+                .catch((err) => {
                   M.toast({
-                    html: "El Contacto Ha Sido Actualizado",
-                    classes: "rounded green darken-3 white-text",
-                  });
-                } else {
-                  M.toast({
-                    html: "Ocurrio Un Error En El Servidor",
+                    html: "Ocurrio Un Error Al Realizar La Peticion",
                     classes: "rounded red darken-3 white-text",
                   });
-                }
-              })
-              .catch((err) => {
-                M.toast({
-                  html: "Ocurrio Un Error Al Realizar La Peticion",
-                  classes: "rounded red darken-3 white-text",
                 });
+            } else {
+              M.toast({
+                html: "El Correo Electronico Ingresado Es Incorrecto",
+                classes: "rounded orange darken-3 white-text",
               });
+            }
           } else {
             M.toast({
               html: "El Numero De Telefono Ingresado Es Incorrecto",
@@ -88,14 +97,14 @@ export function AddContact({ id }) {
   return (
     <>
       <a
-        href="#contentModal"
+        href="#contentModalAgregar"
         className="waves-effect waves-light btn indigo darken-2 modal-trigger"
       >
         <i className="material-icons left">edit</i>
         Agregar Contacto
       </a>
 
-      <div className="modal modal-fixed-footer" id="contentModal">
+      <div className="modal modal-fixed-footer" id="contentModalAgregar">
         <div className="modal-content">
           <h4 className="black-text">Agregar Contacto</h4>
           <div className="divider"></div>
@@ -107,9 +116,8 @@ export function AddContact({ id }) {
                   id="nombre"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "nombre")}
-                  value={nombre}
                 />
-                <label htmlFor="nombre">Nombre</label>
+                <label htmlFor="nombre" className="active">Nombre</label>
               </div>
               <div className="input-field col s6">
                 <input
@@ -117,9 +125,8 @@ export function AddContact({ id }) {
                   id="apellido"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "apellido")}
-                  value= {apellido}
                 />
-                <label htmlFor="apellido">Apellido</label>
+                <label htmlFor="apellido" className="active">Apellido</label>
               </div>
             </div>
             <div className="row">
@@ -129,9 +136,8 @@ export function AddContact({ id }) {
                   id="telefono"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "telefono")}
-                  value={telefono}
                 />
-                <label htmlFor="telefono">Telefono</label>
+                <label htmlFor="telefono" className="active">Telefono</label>
               </div>
               <div className="input-field col s6">
                 <input
@@ -139,9 +145,8 @@ export function AddContact({ id }) {
                   id="correo"
                   className="validate"
                   onChange={(e) => updateData(e.target.value, "correo")}
-                  value={correo}
                 />
-                <label htmlFor="correo">Correo</label>
+                <label htmlFor="correo" className="active">Correo</label>
               </div>
             </div>
           </div>

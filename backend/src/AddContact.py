@@ -16,6 +16,7 @@ def add_contact(request):
 
     try:
         # Conectarse a la base de datos
+        # connection = sqlite3.connect('D:/New folder/OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala/7 SEMESTRE/4AYD1/LAB DE AYD1/BASE DE DATOS P1 TEMPORAL/agenda_db.db')
         connection = sqlite3.connect("db/agenda_db.db")
 
         # Crear un cursor para ejecutar las consultas

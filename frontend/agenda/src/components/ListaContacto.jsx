@@ -31,7 +31,7 @@ function ListaContato() {
             });
         }
     }
-    
+
 
 
 
@@ -45,7 +45,7 @@ function ListaContato() {
         return (
             <div className="container">
                 <div className="agregarContacto">
-                    <AddContact actualizar={getContacts}/>
+                    <AddContact actualizar={getContacts} />
                 </div>
                 <input
                     type="text"

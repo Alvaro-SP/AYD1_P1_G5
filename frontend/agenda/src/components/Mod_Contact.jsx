@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import M from "materialize-css";
 
-export function ModContacto({ id }) {
+export function ModContacto({ id ,actualizar}) {
   
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -71,6 +71,7 @@ export function ModContacto({ id }) {
                       html: "El Contacto Ha Sido Actualizado",
                       classes: "rounded green darken-3 white-text",
                     });
+                    actualizar.actualizar();
                   } else {
                     M.toast({
                       html: "Ocurrio Un Error En El Servidor",

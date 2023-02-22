@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import M from "materialize-css";
 
-export function FavContacts({ id, favorito }) {
+export function FavContacts({ id, favorito , actualizar}) {
   const [iconButton, setIcon] = useState("");
   if (favorito === 1) {
     setIcon("star");
@@ -20,6 +20,7 @@ export function FavContacts({ id, favorito }) {
           } else {
             setIcon("star_border");
           }
+          actualizar.actualizar();
         } else {
           M.toast({
             html: "Ocurrio Un Error En El Servidor",

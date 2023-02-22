@@ -72,11 +72,15 @@ function ListaContato() {
                                     </div>
                                     <div className="row">
                                         <div className="col s1">
-                                            <ModContacto id={dato.id} />
+                                            <ModContacto id={dato.id} actualizar={getContacts} />
                                         </div>
                                         <div className="col s1">
-                                            <FavContacts id={dato.id} favorito={dato.favorito} />
+                                            <FavContacts id={dato.id} favorito={dato.favorito} actualizar={getContacts} />
                                         </div>
+                                        <div className="col s1">
+                                            <EliminarContacto id={dato.id} dato={dato} actualizar={getContacts}/>
+                                        </div>
+
                                     </div>
                                 </div>
                             ))}

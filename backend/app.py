@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from src.ModifyContact import edit_contacto, get_contacto
 from src.AddContact import add_contact
 from src.GetContacts import get_contacts
+from src.AddFavs import add_favs
 
 from flask_cors import CORS
 app = Flask(__name__)
@@ -51,6 +52,28 @@ def obtener_contactos():
     response = jsonify(resprev)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+#! Endpoint para cambiar contacto a favorito
+@app.route('/addfavs', methods=['POST'])
+def aniadir_favorito():
+    # Obtener el id del contacto a buscar desde el objeto JSON enviado con la solicitud HTTP
+    id = request.json['id']
+    # Buscar el contacto en la base de datos
+    contacto,bt = add_favs(id)
+    print(contacto)
+    # Si se encontró el contacto, devolver un objeto JSON con la propiedad "Res" establecida en "true" y el contacto en la propiedad "Contact"
+    if contacto:
+        if bt==1:
+            bt=True
+        else:
+            bt=False
+        response = jsonify({'flag': True, 'fav':bt})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return (response)
+    else:
+        response = jsonify({'flag': False})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return (response)
 
 if __name__ == '__main__':
     app.run()

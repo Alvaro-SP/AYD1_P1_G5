@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ModContacto } from './Mod_Contact'
+import { FavContacts } from "./FavContacts";
 import axios from 'axios'
 import M from "materialize-css"
 
@@ -74,7 +75,12 @@ function ListaContato() {
                                         </div> */}
                                     </div>
                                     <div className="row">
-                                        <ModContacto id={dato.id} />
+                                        <div className="col s1">
+                                            <ModContacto id={dato.id} />
+                                        </div>
+                                        <div className="col s1">
+                                            <FavContacts id={dato.id} favorito={dato.favorito} />
+                                        </div>
                                     </div>
                                 </div>
                             ))}

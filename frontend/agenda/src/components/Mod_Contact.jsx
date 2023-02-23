@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import M from "materialize-css";
 
-export function ModContacto({ id }) {
+export function ModContacto({ id ,actualizar}) {
   
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -22,7 +22,6 @@ export function ModContacto({ id }) {
     axios
       .post("http://localhost:5000/getContact", { 'id': id })
       .then((data) => {
-        console.log(data.data)
         if (data.data.flag) {
           setNombre(data.data.contact.nombre);
           setApellido(data.data.contact.apellido);
@@ -72,6 +71,7 @@ export function ModContacto({ id }) {
                       html: "El Contacto Ha Sido Actualizado",
                       classes: "rounded green darken-3 white-text",
                     });
+                    actualizar.actualizar();
                   } else {
                     M.toast({
                       html: "Ocurrio Un Error En El Servidor",
@@ -131,11 +131,10 @@ export function ModContacto({ id }) {
     <>
       <a
         href={idModal}
-        className="waves-effect waves-light btn indigo darken-2 modal-trigger"
+        className="waves-effect waves-light btn-floating indigo darken-2 modal-trigger"
         onClick={() => getContact()}
       >
         <i className="material-icons left">edit</i>
-        Modificar Contacto
       </a>
 
       <div className="modal modal-fixed-footer" id={triggerModal}>

@@ -80,3 +80,8 @@
     }
 }
 
+.nav-wrapper {
+    background-color: #850000 !important;
+    font-size: 14px;
+    font-weight: bold;
+  }

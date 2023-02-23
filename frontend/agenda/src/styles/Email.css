@@ -1,0 +1,72 @@
+.contenedor-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: calc(100% - 300px);
+    margin-top: 40px;
+}
+
+.contorno {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: auto;
+    background-color: #071249;
+    border-radius: 20px;
+    border: solid 1px #f1f2f7;
+    box-shadow: 0 0 10px 0 rgba(244, 243, 243, 0.738);
+    padding: 2rem
+}
+
+.mi-label {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    width: 100%;
+    color: #f1f2f7;
+    margin-bottom: 1px;
+}
+
+select {
+    width: 800px;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.mi-inpu {
+    width: 800px;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: #f1f2f7;
+    background-color: rgb(255, 255, 255);
+}
+
+.mi-textarea {
+    width: 800px;
+    height: 250px;
+    font-size: 20px;
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+    color: #141415;
+    background-color: rgb(255, 255, 255);
+}
+
+.mi-boton{
+    margin-top: 2rem;
+    cursor: pointer;
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+

@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def get_contacts():
+def list_favs():
     # Inicializar la variable de respuesta y la lista de contactos
     res = False
     contacts = []
@@ -13,9 +13,9 @@ def get_contacts():
 
         # Ejecutar una consulta para obtener todos los registros de la tabla de contactos
         cursor.execute(
-            "SELECT id, nombre, apellido, telefono, correo, favorito FROM contactos")
+            "SELECT id, nombre, apellido, telefono, correo, favorito FROM contactos WHERE favorito = ?",(1,))
         data_db = cursor.fetchall()
-
+        print(data_db)
         # Recorrer los registros obtenidos y agregarlos a la lista de contactos
         for row in data_db:
             contacts.append({

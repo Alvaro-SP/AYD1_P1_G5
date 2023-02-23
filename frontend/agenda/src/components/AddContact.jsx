@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import M from "materialize-css";
 
-export function AddContact() {
+export function AddContact(props) {
   useEffect(() => {
     M.AutoInit();
   }, []);
@@ -39,6 +39,8 @@ export function AddContact() {
                       html: "El Contacto Ha Sido Creado",
                       classes: "rounded green darken-3 white-text",
                     });
+                    //props recibe la funcion actualizar de Contactos.jsx
+                    props.actualizar();
                   } else {
                     M.toast({
                       html: "Ocurrio Un Error En El Servidor",

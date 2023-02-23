@@ -4,9 +4,10 @@ import { FavContacts } from "./FavContacts";
 import axios from 'axios'
 import M from "materialize-css"
 import { AddContact } from './AddContact'
+import { EliminarContacto } from './EliminarContacto'
 import '../styles/ListaContacto.css'
 
-function ListaContato() {
+function ListaContato(fav) {
     const [listado, setListado] = useState([])
     const [loading, setLoading] = useState(false)
     const [filtro, setFiltro] = useState("")
@@ -14,17 +15,28 @@ function ListaContato() {
 
     useEffect(() => {
         getContacts()
-
     }, [])
 
 
     const getContacts = async () => {
-        console.log("getContacts")
+        
         const res = await axios.get("http://localhost:5000/getContacts")
         if (res.data.res) {
-            setListado(res.data.data)
-            setLoading(true)
-            setContador(res.data.data.length)
+            if(fav.fav.fav===2){
+                let data = []
+                res.data.data.forEach((da)=>{
+                    if(da.favorito===1){
+                        data.push(da)
+                    }
+                })
+                setListado(data)
+                setLoading(true)
+                setContador(data.length)
+            }else{
+                setListado(res.data.data)
+                setLoading(true)
+                setContador(res.data.data.length)
+            }
         } else {
             M.toast({
                 html: "Ocurrio Un Error En El Servidor",
@@ -75,12 +87,11 @@ function ListaContato() {
                                             <ModContacto id={dato.id} actualizar={getContacts} />
                                         </div>
                                         <div className="col s1">
-                                            <FavContacts id={dato.id} favorito={dato.favorito} actualizar={getContacts} />
+                                            <FavContacts id={dato.id} favorito={dato.favorito} />
                                         </div>
                                         <div className="col s1">
-                                            <EliminarContacto id={dato.id} dato={dato} actualizar={getContacts}/>
+                                            <EliminarContacto id={dato.id} data={dato.nombre+" "+dato.apellido} actualizar={getContacts}/>
                                         </div>
-
                                     </div>
                                 </div>
                             ))}

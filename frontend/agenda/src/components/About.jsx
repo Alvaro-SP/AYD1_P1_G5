@@ -1,9 +1,8 @@
 import React from 'react';
 
-export function AboutUs() {
+export function About() {
 
     return (
-        <>
         <div className="container">
             <div className="row">
                 <h2>Grupo 5</h2>
@@ -40,6 +39,5 @@ export function AboutUs() {
                 </tbody>
             </table>
         </div>
-        </>
     )
 }

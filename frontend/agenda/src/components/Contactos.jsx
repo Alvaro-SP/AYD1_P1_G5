@@ -4,13 +4,13 @@ import '../styles/Contactos.css'
 
 import { AddContact } from './AddContact'
 import ListaContacto from './ListaContacto'
-function Contactos() {
+function Contactos(fav) {
 
     return (
         <div className="contenedor-general">
             <h1>Contactos Guardados</h1>
 
-            <ListaContacto/>
+            <ListaContacto fav={fav}/>
         </div>
     )
 }

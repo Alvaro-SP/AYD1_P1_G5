@@ -13,7 +13,8 @@ def delete_contact(request):
 
     try:
         # Establecer una conexión con la base de datos
-        connection = sqlite3.connect("db/agenda_db.db")
+
+        connection = sqlite3.connect("../db/agenda_db.db")
 
         # Crear un objeto cursor para interactuar con la base de datos
         cursor = connection.cursor()

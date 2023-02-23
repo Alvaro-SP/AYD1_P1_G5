@@ -71,7 +71,7 @@ export function ModContacto({ id ,actualizar}) {
                       html: "El Contacto Ha Sido Actualizado",
                       classes: "rounded green darken-3 white-text",
                     });
-                    actualizar.actualizar();
+                    //actualizar.actualizar();
                   } else {
                     M.toast({
                       html: "Ocurrio Un Error En El Servidor",

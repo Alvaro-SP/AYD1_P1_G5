@@ -62,7 +62,6 @@ def aniadir_favorito():
     id = request.json['id']
     # Buscar el contacto en la base de datos
     contacto,bt = add_favs(id)
-    print(contacto)
     # Si se encontró el contacto, devolver un objeto JSON con la propiedad "Res" establecida en "true" y el contacto en la propiedad "Contact"
     if contacto:
         if bt==1:

@@ -3,8 +3,7 @@ import sqlite3
 # Función para obtener un contacto de la base de datos
 def get_contacto(id):
     # Conexión a la base de datos
-    # conn = sqlite3.connect('D:/New folder/OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala/7 SEMESTRE/4AYD1/LAB DE AYD1/BASE DE DATOS P1 TEMPORAL/agenda_db.db')
-    conn = sqlite3.connect('db/agenda_db.db')
+    conn = sqlite3.connect("../db/agenda_db.db")
     c = conn.cursor()
 
     # Buscar el contacto por id en la base de datos
@@ -23,8 +22,7 @@ def edit_contacto(contacto):
     bandera = False
     try:
         # Conexión a la base de datos
-        # conn = sqlite3.connect('D:/New folder/OneDrive - Facultad de Ingeniería de la Universidad de San Carlos de Guatemala/7 SEMESTRE/4AYD1/LAB DE AYD1/BASE DE DATOS P1 TEMPORAL/agenda_db.db')
-        conn = sqlite3.connect('db/agenda_db.db')
+        conn = sqlite3.connect("../db/agenda_db.db")
         c = conn.cursor()
 
         # Actualizar el contacto en la base de datos

@@ -4,6 +4,7 @@ from src.AddContact import add_contact
 from src.GetContacts import get_contacts
 from src.AddFavs import add_favs
 from src.Listfavs import list_favs
+from src.DelContact import delete_contact
 
 from flask_cors import CORS
 app = Flask(__name__)
@@ -80,6 +81,14 @@ def aniadir_favorito():
 @app.route('/listfavs', methods=['GET'])
 def obtener_favoritos():
     resprev = list_favs()
+    response = jsonify(resprev)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+#! Endpoint para eliminar un contacto
+@app.route('/deleteContact', methods=['POST'])
+def elimnar_contacto():
+    resprev = delete_contact(request)
     response = jsonify(resprev)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

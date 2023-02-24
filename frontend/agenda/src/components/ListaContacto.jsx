@@ -92,6 +92,13 @@ function ListaContato(fav) {
                                         <div className="col s1">
                                             <EliminarContacto id={dato.id} data={dato.nombre+" "+dato.apellido} actualizar={getContacts}/>
                                         </div>
+                                        <div className="col s1">
+                                            <a href={"http://wa.me/502"+dato.telefono} className="btn-floating waves-effect waves-light green darken-2" target="_blank">
+                                                <i className="material-icons">
+                                                perm_phone_msg
+                                                </i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
